@@ -21,7 +21,8 @@ var createSwaggerPage = (options) => {
         swaggerDefinition: {
             info: {
                 title: options.title,
-                version: options.version
+                version: options.version,
+                description: options.description
             },
         },
         apis: options.apis || []
@@ -56,7 +57,9 @@ var createSwaggerPage = (options) => {
             }
 
             if (req.params[0] === 'index.html') {
-                var swaggerJsonFileUrl = `${req.isSecure() ? 'https' : 'http'}://${req.headers.host}${publicPath}/swagger.json`;
+            var host = (option.host) ? option.host : req.headers.host;
+
+            var swaggerJsonFileUrl = `${req.isSecure() ? 'https' : 'http'}://${host}${publicPath}/swagger.json`;
                 content = content.toString().replace('url = "http://petstore.swagger.io/v2/swagger.json"', `url ="${swaggerJsonFileUrl}"`);
             }
 
